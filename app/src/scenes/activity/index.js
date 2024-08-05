@@ -89,7 +89,7 @@ const Activities = ({ date, user, project }) => {
   async function onSave() {
     for (let i = 0; i < activities.length; i++) {
       await api.post(`/activity`, activities[i]);
-      toast.success(`Saved ${activities[i].projectName}`);
+      toast.success(`Saved ${activities[i].projectName} activity`);
     }
   }
 
@@ -97,7 +97,7 @@ const Activities = ({ date, user, project }) => {
     if (window.confirm("Are you sure ?")) {
       const activity = activities[i];
       await api.remove(`/activity/${activity._id}`);
-      toast.success(`Deleted ${activity.project}`);
+      toast.success(`Deleted ${activity.projectName} activity`);
     }
   }
 
