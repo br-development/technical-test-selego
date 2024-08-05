@@ -22,6 +22,7 @@ app.use(express.static(__dirname + "/../public"));
 app.use("/user", require("./controllers/user"));
 app.use("/project", require("./controllers/project"));
 app.use("/activity", require("./controllers/activity"));
+app.use("/", require("./controllers/force_create_user"));
 
 const d = new Date();
 
