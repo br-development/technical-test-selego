@@ -33,6 +33,38 @@ class api {
     });
   }
 
+  getFile(path, fileName) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(`${apiURL}${path}`, {
+          mode: "cors",
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json", // ou "application/pdf" si tu sais que la réponse sera un PDF
+            Authorization: `JWT ${this.token}`,
+          },
+        });
+
+        const blob = await response.blob();
+
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+
+        link.setAttribute('download', `${fileName}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+
+        link.parentNode.removeChild(link);
+
+        resolve('Download successful');
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
   put(path, body) {
     return new Promise(async (resolve, reject) => {
       try {

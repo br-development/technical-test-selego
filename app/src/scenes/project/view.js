@@ -12,6 +12,7 @@ import api from "../../services/api";
 
 import ProgressBar from "../../components/ProgressBar";
 import SelectMonth from "./../../components/selectMonth";
+import toast from "react-hot-toast";
 
 ChartJS.register(...registerables);
 
@@ -36,6 +37,11 @@ export default function ProjectView() {
 
   if (!project) return <Loader />;
 
+  async function handleDownload() {
+    await api.getFile(`/project/${id}/pdf`, `invoice_${id}`);
+    toast.success("successfully downloaded!");
+  }
+
   return (
     <React.Fragment>
       <div className="pl-20 pt-24 pb-4 w-[98%]">
@@ -49,6 +55,9 @@ export default function ProjectView() {
                 onClick={() => history.push(`/project/edit/${project?._id}`)}
                 className="border !border-[#0560FD] text-[#0560FD] py-[7px] px-[20px] bg-[#FFFFFF] rounded-[16px]">
                 Edit
+              </button>
+              <button onClick={handleDownload} className="border !border-[#0560FD] text-[#0560FD] py-[7px] px-[20px] bg-[#FFFFFF] rounded-[16px]">
+                Invoice
               </button>
             </div>
           </div>
